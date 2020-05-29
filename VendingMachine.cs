@@ -20,13 +20,13 @@ namespace Vending
         // Add a new product to the Vending Machine (For stocking machine)
         public void AddProduct(Product newProduct)
         {
-            throw new NotImplementedException();
+            _products.Add(newProduct);
         }
 
         // Remove a product from the Vending Machine (for purchasing a product)
         public void RemoveProduct(Product productToRemove)
         {
-            throw new NotImplementedException();
+            _products.Remove(productToRemove);
         }
 
         // Get all products ordered by price (lowest on top)
@@ -41,30 +41,36 @@ namespace Vending
         {
             List<Product> foundProduct = _products.Where(p => p.Name == nameCriteria).ToList();
             return foundProduct;
+            
         }
 
         // Find a product between a range or prices. Results should be ord0ered by price
         public List<Product> SearchByPrice(double minPrice, double maxPrice)
         {
-            throw new NotImplementedException();
+            List<Product> foundProducts = _products.Where(p => p.Price > minPrice && p.Price < maxPrice).ToList();
+            return foundProducts;
         }
 
         // Return a product with a given ID. Return null if not found.
         public Product GetById(int id)
         {
-            throw new NotImplementedException();
+            return _products.FirstOrDefault(p => p.Id == id);
         }
 
         // Return the cheapest product or null if there are no products
         public Product GetCheapest()
         {
-            throw new NotImplementedException();
+            double foundPrice = _products.Min(p => p.Price);
+            Product foundProduct = _products.FirstOrDefault(p => p.Price == foundPrice);
+            return foundProduct;
         }
 
         // Return the most expensive product or null if there are no products
         public Product GetMostExpensive()
         {
-            throw new NotImplementedException();
+            double foundPrice = _products.Max(p => p.Price);
+            Product foundProduct = _products.FirstOrDefault(p => p.Price == foundPrice);
+            return foundProduct;
         }
 
         // Return all the product names in alphabetical ordere
@@ -80,7 +86,12 @@ namespace Vending
         {
             get
             {
-                throw new NotImplementedException();
+                double total = 0;
+                foreach (Product product in _products)
+                {
+                    total+= product.Price;
+                }
+                return total;
             }
         }
     }

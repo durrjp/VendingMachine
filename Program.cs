@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Vending
 {
@@ -41,12 +43,19 @@ namespace Vending
                         List<Product> productsByName = machine.SearchByName(nameCriteria);
 
                         Console.WriteLine("Results:");
-                        foreach (Product p in productsByName)
+                        if(productsByName.Any())
                         {
-                            Console.Write(" ");
-                            p.Display();
+                            foreach (Product p in productsByName)
+                            {
+                                Console.Write(" ");
+                                p.Display();
+                            }
+                            break;
+                        } else
+                        {
+                            Console.Write("no results found");
+                            break;
                         }
-                        break;
                     case 4:
                         Console.Write("Min Price> ");
                         string strMin = Console.ReadLine();
